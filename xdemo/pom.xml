@@ -17,4 +17,7 @@
 	<dependencies>
 
 	</dependencies>
+	<modules>
+		<module>xdemo.lock</module>
+	</modules>
 </project>
