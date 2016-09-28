@@ -19,5 +19,6 @@
 	</dependencies>
 	<modules>
 		<module>xdemo.lock</module>
-	</modules>
+        <module>../xWeixin-demo</module>
+    </modules>
 </project>
