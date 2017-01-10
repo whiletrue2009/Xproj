@@ -44,18 +44,18 @@ public class LhbDao {
 			try {
 				objectArr = queryRunner.insert(conn, sql, arrayHandler,
 						valueArr);
-				logger.info("insert: {}" , map);
+				logger.info("insert: {}", map);
 				logger.info(StringUtils.join(objectArr, ","));
 			} catch (SQLException e) {
-				logger.error(map.toString(),e);
+				logger.error(map.toString(), e);
 			}
-			
+
 		}
 		this.cleanData();
 		DbUtils.closeQuietly(conn);
-		
+
 	}
-	
+
 	public void insertLhbDetail(DataFrameVo detailDf) throws SQLException {
 
 		QueryRunner queryRunner = new QueryRunner();
@@ -65,42 +65,66 @@ public class LhbDao {
 		String sql = "INSERT INTO t_lhb_detail(code, name,type,ranking, date,yyb,butCount,sellCount ) VALUES(?,?,?,?,?,?,?,?)";
 
 		for (Map<String, String> map : detailDf.getDf()) {
-			String[] valueArr = this.getValueArr(map, DragonDetail.getDfKeyArr());
-			
+			String[] valueArr = this.getValueArr(map,
+					DragonDetail.getDfKeyArr());
+
 			Object[] objectArr = null;
 			try {
 				objectArr = queryRunner.insert(conn, sql, arrayHandler,
 						valueArr);
 				logger.info(StringUtils.join(objectArr, ","));
-				logger.info("insert: {}" , map);
+				logger.info("insert: {}", map);
 			} catch (SQLException e) {
-				logger.error(map.toString(),e);
+				logger.error(map.toString(), e);
 			}
 		}
-		this.cleanData();
 		DbUtils.closeQuietly(conn);
 	}
-	
-	 
-	
-	
-	public void cleanData ( )   {
+
+	public void insertLhbDetailSum(DataFrameVo detailDf) throws SQLException {
+
+		QueryRunner queryRunner = new QueryRunner();
+		ArrayHandler arrayHandler = new ArrayHandler();
+
+		Connection conn = JdbcUtil.getConnection();
+		String sql = "INSERT INTO t_lhb_detail_sum(code, name,type,ranking, date,yyb,butCount,sellCount ) VALUES(?,?,?,?,?,?,?,?)";
+
+		for (Map<String, String> map : detailDf.getDf()) {
+			String[] valueArr = this.getValueArr(map,
+					DragonDetail.getDfKeyArr());
+
+			Object[] objectArr = null;
+			try {
+				objectArr = queryRunner.insert(conn, sql, arrayHandler,
+						valueArr);
+				logger.info(StringUtils.join(objectArr, ","));
+				logger.info("insert: {}", map);
+			} catch (SQLException e) {
+				logger.error(map.toString(), e);
+			}
+		}
+		DbUtils.closeQuietly(conn);
+	}
+
+	public void cleanData() {
 
 		QueryRunner queryRunner = new QueryRunner();
 
 		Connection conn = JdbcUtil.getConnection();
 		String buySql = "update t_lhb_detail  set butCount ='0' where butCount='--' ";
 		String sellSql = "update t_lhb_detail  set sellCount ='0' where sellCount='--' ";
-		 try {
+		String buySqlSum = "update t_lhb_detail_sum  set butCount ='0' where butCount='--' ";
+		String sellSqlSum = "update t_lhb_detail_sum  set sellCount ='0' where sellCount='--' ";
+		try {
 			queryRunner.update(conn, buySql);
-			 queryRunner.update(conn, sellSql); 
+			queryRunner.update(conn, sellSql);
+			queryRunner.update(conn, buySqlSum);
+			queryRunner.update(conn, sellSqlSum);
 		} catch (SQLException e) {
-			logger.error(e.toString(),e);
+			logger.error(e.toString(), e);
 		}
-		
-		
+
 		DbUtils.closeQuietly(conn);
 	}
-	
 
 }

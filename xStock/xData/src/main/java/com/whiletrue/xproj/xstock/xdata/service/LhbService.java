@@ -69,6 +69,13 @@ public class LhbService {
 		this.lhbDao.insertLhbDetail(df);
 	}
 	
+	public void insertLhbDetailSum(DataFrameVo df) throws SQLException{
+		this.lhbDao.insertLhbDetailSum(df);
+	}
+	
+	public void cleanData() throws SQLException{
+		this.lhbDao.cleanData();
+	}
 	
 	
 	/**

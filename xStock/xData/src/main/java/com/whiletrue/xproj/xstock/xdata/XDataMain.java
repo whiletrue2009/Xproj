@@ -2,28 +2,17 @@ package com.whiletrue.xproj.xstock.xdata;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.whiletrue.xproj.xstock.js.XDataJsParser;
-import com.whiletrue.xproj.xstock.util.JdbcUtil;
 import com.whiletrue.xproj.xstock.xdata.domain.DataFrameVo;
 import com.whiletrue.xproj.xstock.xdata.service.LhbService;
 import com.whiletrue.xproj.xstock.xdata.tx.DragonDetail;
-import com.whiletrue.xproj.xstock.xdata.tx.DragonList;
 
 public class XDataMain {
 	// public static String url_163 =
@@ -40,7 +29,7 @@ public class XDataMain {
 	private static final ExecutorService fixedThreadPool = Executors
 			.newFixedThreadPool(10);
 
-	private static void concurrentVersion() throws  IOException, SQLException {
+	private static void concurrentVersion() throws IOException, SQLException {
 		final LhbService lhbService = new LhbService();
 
 		DataFrameVo df = lhbService.getLhbListByCodeAndDate("", "20170101",
@@ -70,14 +59,14 @@ public class XDataMain {
 					} catch (SQLException e) {
 						logger.error(e.toString(), e);
 					}
-
 				}
 			});
+			
 		}
+		lhbService.cleanData();
 	}
-	
-	
-	private static void commonVersion() throws  IOException, SQLException {
+
+	private static void commonVersion() throws IOException, SQLException {
 		final LhbService lhbService = new LhbService();
 
 		DataFrameVo df = lhbService.getLhbListByCodeAndDate("", "20170101",
@@ -94,9 +83,18 @@ public class XDataMain {
 
 			DataFrameVo df2 = lhbService.getLhbDetailByCode(code, date, type);
 			logger.info(df2.toString());
-			lhbService.insertLhbDetail(df2);
+			if (type.equals(DragonDetail.day_sum_070001)) {
+				lhbService.insertLhbDetail(df2);
+			} else if (type.equals(DragonDetail.accumulate_070005)) {
+				lhbService.insertLhbDetailSum(df2);
+			} else {
+				logger.error("$$$$$$$$ code ：{} , date {} ,type {}", code,
+						date, type);
+			}
+
 		}
-		
+
+		lhbService.cleanData();
 	}
 
 	public static void main(String[] args) throws IOException, SQLException {

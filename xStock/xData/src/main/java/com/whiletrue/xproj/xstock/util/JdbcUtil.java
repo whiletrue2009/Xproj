@@ -20,7 +20,7 @@ public class JdbcUtil {
 	private static final Logger logger = LoggerFactory
 			.getLogger(JdbcUtil.class);
 	
-	private static final String  dbPath = "E:\\dev\\sqlite\\lhb\\lhb2.db";
+	private static final String  dbPath = "E:\\dev\\sqlite\\lhb\\lhb.db";
 	
 
 	public static Connection getConnection() {

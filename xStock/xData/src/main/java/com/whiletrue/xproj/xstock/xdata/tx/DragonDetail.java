@@ -39,6 +39,9 @@ public class DragonDetail {
 	private static final String[] lhbListKeyArr = new String[] { 
 			"code", "name","type","ranking", "date","yyb","butCount","sellCount" };
 
+	public static final String day_sum_070001 = "070001";
+	public static final String accumulate_070005 = "070005";
+	
 	public static String[] getDfKeyArr() {
 
 		return lhbListKeyArr;

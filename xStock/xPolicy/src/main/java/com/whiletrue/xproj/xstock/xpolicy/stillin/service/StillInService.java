@@ -28,7 +28,11 @@ public class StillInService {
 		List<String> codeList = this.getCalcCode(date);
 		logger.info("####### codeList : {}" ,codeList);
 		
+		
+		
 	}
+	
+	
 	
 	
 	/**
