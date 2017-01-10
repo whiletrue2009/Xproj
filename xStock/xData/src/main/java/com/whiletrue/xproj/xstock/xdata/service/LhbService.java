@@ -49,12 +49,13 @@ public class LhbService {
 			String end) throws MalformedURLException, IOException {
 
 		String url = DragonList.getLhbUrlByCodeAndDate(code, begin, end);
-
+		logger.info("########### url is: {}" ,url);
+		
 		Document document = Jsoup.parse(new URL(url).openStream(), "GBK", url);
 		Elements el = document.getElementsByTag("body");
 		String jsData = el.get(0).text();
+		logger.info(jsData);
 		String str = XDataJsParser.parseJS(jsData, DragonList.getJsKey());
-
 		logger.info(str);
 		return new DataFrameVo(str, DragonList.getDfKeyArr());
 	}

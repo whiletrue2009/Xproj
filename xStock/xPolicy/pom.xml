@@ -16,6 +16,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
+  
+  	<dependency>
+      <groupId>com.whiletrue.xpro.xstock</groupId>
+      <artifactId>xData</artifactId>
+      <version>${xstock.version}</version>
+    </dependency>
+    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

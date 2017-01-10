@@ -18,7 +18,7 @@ public class DragonList {
 	 * 1&l=&ol=6&o=desc c:code b:startDate e:endDate
 	 * 
 	 */
-	private static final String lhb = "http://stock.finance.qq.com/cgi-bin/sstock/q_lhb_js?t=0&c=%s&b=%s&e=%s&p=1&l=&ol=6&o=desc";
+	private static final String lhb = "http://stock.finance.qq.com/cgi-bin/sstock/q_lhb_js?t=2&c=%s&b=%s&e=%s&p=1&l=&ol=6&o=desc";
 
 	private static final String result_key = "tt";
 

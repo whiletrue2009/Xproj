@@ -51,8 +51,9 @@ public class LhbDao {
 			}
 			
 		}
-		
+		this.cleanData();
 		DbUtils.closeQuietly(conn);
+		
 	}
 	
 	public void insertLhbDetail(DataFrameVo detailDf) throws SQLException {
@@ -75,15 +76,31 @@ public class LhbDao {
 			} catch (SQLException e) {
 				logger.error(map.toString(),e);
 			}
-			
-//			Object[] objectArr = queryRunner.insert(conn, sql, arrayHandler,
-//					valueArr);
-//			logger.info(StringUtils.join(objectArr, ","));
 		}
-		
+		this.cleanData();
 		DbUtils.closeQuietly(conn);
 	}
 	
+	 
+	
+	
+	public void cleanData ( )   {
+
+		QueryRunner queryRunner = new QueryRunner();
+
+		Connection conn = JdbcUtil.getConnection();
+		String buySql = "update t_lhb_detail  set butCount ='0' where butCount='--' ";
+		String sellSql = "update t_lhb_detail  set sellCount ='0' where sellCount='--' ";
+		 try {
+			queryRunner.update(conn, buySql);
+			 queryRunner.update(conn, sellSql); 
+		} catch (SQLException e) {
+			logger.error(e.toString(),e);
+		}
+		
+		
+		DbUtils.closeQuietly(conn);
+	}
 	
 
 }
